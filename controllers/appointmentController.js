@@ -134,3 +134,23 @@ exports.deleteAppointment = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getAppointmentsForUser = async (req, res) => {
+  try {
+      const { userId, role } = req.user; // Extraer userId y role del token
+
+      if (role === 'patient') {
+          // Obtener citas relacionadas con el ID del paciente logueado
+          const appointments = await Appointment.find({ patient: userId })
+              .populate('doctor', 'name') // Obtener el nombre del doctor
+              .populate('patient', 'name'); // Obtener el nombre del paciente
+
+          return res.status(200).json(appointments);
+      }
+
+      return res.status(403).json({ error: "Access denied. Only patients can view their appointments." });
+  } catch (error) {
+      console.error("Error fetching appointments for user:", error);
+      res.status(500).json({ error: "Error fetching appointments." });
+  }
+};

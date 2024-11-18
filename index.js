@@ -37,6 +37,7 @@ const appointmentRoutes = require('./routes/appointmentRoutes'); // Rutas de cit
 const reportRoutes = require('./routes/reportRoutes'); // Rutas estadísticas
 const reportpdfRoutes = require('./routes/reportpdfRoutes'); // Rutas PDFS
 
+
 // Usar las rutas
 app.use('/auth', authRoutes); // Rutas de autenticación, incluyendo /register-with-role
 app.use('/doctors', doctorRoutes); // Rutas de doctores

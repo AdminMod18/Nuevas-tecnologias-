@@ -11,8 +11,8 @@ const { register, login, registerWithRole } = require("../controllers/authContro
 const { authMiddleware, authorize } = require("../middleware/authMiddleware");
 
 // Rutas de paciente con permisos según el rol
-router.get("/", authMiddleware, authorize(['doctor', 'admin']), getPatients);
-router.post("/", authMiddleware, authorize(['admin']), createPatient);
+router.get("/", authMiddleware, authorize(['doctor', 'admin', 'patient']), getPatients);
+router.post("/", authMiddleware, authorize(['admin', 'doctor', 'patient']), createPatient);
 router.get("/:id", authMiddleware, authorize(['doctor', 'admin', 'patient']), getPatient);
 router.put("/:id", authMiddleware, authorize(['doctor', 'admin']), updatePatient);
 router.delete("/:id", authMiddleware, authorize(['admin']), deletePatient);

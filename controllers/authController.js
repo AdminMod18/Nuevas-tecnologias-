@@ -38,20 +38,22 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
+      const user = await User.findOne({ email });
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+          return res.status(401).json({ error: "Invalid credentials" });
+      }
 
-    const token = jwt.sign(
-      { userId: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-    res.json({ token });
+      // Generar el token con userId y role
+      const token = jwt.sign(
+          { userId: user._id, role: user.role },
+          process.env.JWT_SECRET,
+          { expiresIn: "1h" }
+      );
+
+      res.json({ token });
   } catch (error) {
-    console.error('Login failed:', error);
-    res.status(400).json({ error: "Login failed" });
+      console.error('Login failed:', error);
+      res.status(400).json({ error: "Login failed" });
   }
 };
 

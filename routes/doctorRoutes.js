@@ -10,7 +10,7 @@ const {
 const { authMiddleware, authorize } = require("../middleware/authMiddleware");
 
 // Rutas de doctor con permisos según el rol
-router.get("/", authMiddleware, authorize(['doctor', 'admin']), getDoctors);
+router.get("/", authMiddleware, authorize(['doctor', 'admin','patient']), getDoctors);
 router.post("/", authMiddleware, authorize(['admin']), createDoctor);
 router.get("/:id", authMiddleware, authorize(['doctor', 'admin']), getDoctorById);
 router.put("/:id", authMiddleware, authorize(['doctor', 'admin']), updateDoctor);
